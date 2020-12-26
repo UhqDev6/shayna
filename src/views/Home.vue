@@ -2,6 +2,7 @@
   <div class="home">
   <HeaderShayna></HeaderShayna>
   <CarosalShayna></CarosalShayna>
+  <BannerShayna></BannerShayna>
   </div>
 </template>
 
@@ -10,13 +11,15 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import HeaderShayna from '../components/HeaderShayna';
 import CarosalShayna from '../components/CarosalShayna';
+import BannerShayna from '../components/BannerShayna';
 
 
 export default {
   name: 'Home',
   components: {
     HeaderShayna,
-    CarosalShayna
+    CarosalShayna,
+    BannerShayna
   }
 }
 </script>
