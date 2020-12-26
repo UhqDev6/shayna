@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 mt-5">
-                    <carousel class="product-slider" :items="3" :nav="false" :autoplay="true" >
+                    <carousel class="product-slider" :items="3" :nav="false" :autoplay="true" :dots="false" >
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="img/products/women-2.jpg" alt="" />
