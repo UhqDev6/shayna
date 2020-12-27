@@ -5,6 +5,7 @@
   <BannerShayna></BannerShayna>
   <InstaShayna></InstaShayna>
   <ParnertShayna></ParnertShayna>
+  <FooterShayna></FooterShayna>
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import CarosalShayna from '../components/CarosalShayna';
 import BannerShayna from '../components/BannerShayna';
 import InstaShayna from '../components/InstaShayna';
 import ParnertShayna from '../components/ParnertShayna';
+import FooterShayna from '../components/FooterShayna';
 
 
 export default {
@@ -25,7 +27,8 @@ export default {
     CarosalShayna,
     BannerShayna,
     InstaShayna,
-    ParnertShayna
+    ParnertShayna,
+    FooterShayna
   }
 }
 </script>
