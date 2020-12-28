@@ -107,13 +107,15 @@ export default {
           "img/mickey2.jpg",
           "img/mickey3.jpg",
           "img/mickey4.jpg"
-      ]
+      ],
+      idPoduct: this.$route.params.id
       }
 
   },
   methods: {
       changeImage (urlImage){
           this.gambar = urlImage;
+          console.log(this.idPoduct);
       }
   }
 };
