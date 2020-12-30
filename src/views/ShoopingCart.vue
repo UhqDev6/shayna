@@ -35,7 +35,7 @@
                                     <tbody>
                                         <tr v-for="keranjang in keranjangUser" :key="keranjang.id">
                                             <td class="cart-pic first-row">
-                                                <img :src="keranjang.galleries" />
+                                                <img class="img-cart" :src="keranjang.galleries" />
                                             </td>
                                             <td class="cart-title first-row text-center">
                                                 <h5>{{ keranjang.name }}</h5>
@@ -119,6 +119,11 @@ export default {
         };
     },
         methods: {
+            removeItem(index){
+                this.keranjangUser.splice(index, 1);
+                const parsed = JSON.stringify(this.keranjangUser);
+                localStorage.setItem('keranjangUser', parsed);
+            },
             saveKeranjang(idProduct, nameProduct, priceProduct, photoProduct)
             {
             var productStored = {
@@ -143,4 +148,11 @@ export default {
 }
 }
 </script>
+
+<style scoped>
+    .img-cart {
+        height: 110px;
+        width: 110px;
+    }
+</style>
 
