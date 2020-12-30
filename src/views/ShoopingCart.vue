@@ -86,9 +86,9 @@
                             <div class="proceed-checkout text-left">
                                 <ul>
                                     <li class="subtotal">ID Transaction <span>#SH12000</span></li>
-                                    <li class="subtotal mt-3">Subtotal <span>$240.00</span></li>
-                                    <li class="subtotal mt-3">Pajak <span>10%</span></li>
-                                    <li class="subtotal mt-3">Total Biaya <span>$440.00</span></li>
+                                    <li class="subtotal mt-3">Subtotal <span>Rp {{ totalHarga }}</span></li>
+                                    <li class="subtotal mt-3">Pajak <span>10% Rp {{ tambahPajak }}</span></li>
+                                    <li class="subtotal mt-3">Total Biaya <span>Rp {{ totalBiaya }} </span></li>
                                     <li class="subtotal mt-3">Bank Transfer <span>Mandiri</span></li>
                                     <li class="subtotal mt-3">No. Rekening <span>2208 1996 1403</span></li>
                                     <li class="subtotal mt-3">Nama Penerima <span>Shayna</span></li>
@@ -138,14 +138,34 @@ export default {
             }
         },
         mounted() {
-          if (localStorage.getItem('keranjangUser')) {
-          try {
-              this.keranjangUser = JSON.parse(localStorage.getItem('keranjangUser'));
-          } catch (error) {
-              localStorage.removeItem('keranjanguser');
-          }
-          }
-}
+            if (localStorage.getItem('keranjangUser')) 
+            {
+                try {
+                    this.keranjangUser = JSON.parse(localStorage.getItem('keranjangUser'));
+                } catch (error) {
+                    localStorage.removeItem('keranjanguser');
+                }
+            }
+        },
+        computed : {
+            totalHarga() 
+            {
+                return this.keranjangUser.reduce(function (items, data) 
+                {
+                    return items + data.price;
+                }, 0);
+            },
+
+            tambahPajak()
+            {
+                return (this.totalHarga * 0.1);
+            },
+
+            totalBiaya()
+            {
+                return (this.totalHarga + this.tambahPajak);
+            }
+        }
 }
 </script>
 
