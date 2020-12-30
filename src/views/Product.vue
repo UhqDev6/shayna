@@ -49,7 +49,14 @@
                                     <h4>{{ productDetails.price }}</h4>
                                 </div>
                                 <div class="quantity">
-                                    <a @click="saveKeranjang(productDetails.id)" href="#" class="primary-btn pd-cart">Add To Cart</a>
+                                    <a 
+                                    @click="saveKeranjang(
+                                        productDetails.id, 
+                                        productDetails.name,
+                                        productDetails.price,
+                                        productDetails.galleries[0].photo
+                                        )" 
+                                    href="#" class="primary-btn pd-cart">Add To Cart</a>
                                 </div>
                             </div>
                         </div>
@@ -103,9 +110,15 @@ export default {
           // replace value gambar default dengan data dari API (Galleries)
           this.gambar = data.galleries[0].photo;
       },
-      saveKeranjang(idProduct)
+      saveKeranjang(idProduct, nameProduct, priceProduct, photoProduct)
       {
-          this.keranjangUser.push(idProduct);
+          var productStored = {
+              "id" : idProduct,
+              "name" : nameProduct,
+              "price" : priceProduct,
+              "galleries" : photoProduct
+          }
+          this.keranjangUser.push(productStored);
           const parsed = JSON.stringify(this.keranjangUser);
           localStorage.setItem('keranjangUser', parsed);
       }
