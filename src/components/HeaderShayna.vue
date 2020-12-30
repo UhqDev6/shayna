@@ -47,7 +47,7 @@
                                                             <h6>{{ keranjang.name }}</h6>
                                                         </div>
                                                     </td>
-                                                    <td class="si-close">
+                                                    <td @click="removeItem(keranjangUser.index)" class="si-close">
                                                         <i class="ti-close"></i>
                                                     </td>
                                                 </tr>
@@ -64,7 +64,7 @@
                                         <h5>$120.00</h5>
                                     </div>
                                     <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
+                                        <a href="#" class="primary-btn view-card"><router-link to="/cart">CARD</router-link></a>
                                         <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
                                     </div>
                                 </div>
@@ -85,6 +85,13 @@ export default {
       return {
       keranjangUser: []
       };
+  },
+  methods : {
+      removeItem(index){
+          this.keranjangUser.splice(index, 1);
+          const parsed = JSON.stringify(this.keranjangUser);
+          localStorage.setItem('keranjangUser', parsed);
+      }
   },
   mounted() {
         if (localStorage.getItem('keranjangUser')) {
