@@ -30,15 +30,16 @@
                                 Keranjang Belanja &nbsp;
                                 <a href="#">
                                     <i class="icon_bag_alt"></i>
-                                    <span>3</span>
+                                    <span>{{ keranjangUser.length }}</span>
                                 </a>
                                 <div class="cart-hover">
                                     <div class="select-items">
                                         <table>
-                                            <tbody>
+                                            <tbody v-if="keranjangUser.length > 0">
+                                                
                                                 <tr v-for="keranjang in keranjangUser" :key="keranjang.id">
                                                     <td class="si-pic">
-                                                        <img :src="keranjang.galleries" alt="" />
+                                                        <img class="foto-item" :src="keranjang.galleries" alt="" />
                                                     </td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
@@ -49,6 +50,11 @@
                                                     <td class="si-close">
                                                         <i class="ti-close"></i>
                                                     </td>
+                                                </tr>
+                                            </tbody >
+                                            <tbody v-else>
+                                                <tr>
+                                                    <td>Keranjang Kosong</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -91,3 +97,10 @@ export default {
   }
 }
 </script>
+
+<style  scoped>
+    .foto-item {
+        width: 70px;
+        height: 70px;
+    }
+</style>
