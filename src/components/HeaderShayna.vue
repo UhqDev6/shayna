@@ -36,28 +36,14 @@
                                     <div class="select-items">
                                         <table>
                                             <tbody>
-                                                <tr>
+                                                <tr v-for="keranjang in keranjangUser" :key="keranjang.id">
                                                     <td class="si-pic">
-                                                        <img src="img/select-product-1.jpg" alt="" />
+                                                        <img :src="keranjang.galleries" alt="" />
                                                     </td>
                                                     <td class="si-text">
                                                         <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic">
-                                                        <img src="img/select-product-2.jpg" alt="" />
-                                                    </td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
+                                                            <p>${{keranjang.price}} x 1</p>
+                                                            <h6>{{ keranjang.name }}</h6>
                                                         </div>
                                                     </td>
                                                     <td class="si-close">
@@ -88,6 +74,20 @@
 
 <script>
 export default {
-    name : 'HeaderShayna'
+    name : 'HeaderShayna',
+     data (){
+      return {
+      keranjangUser: []
+      };
+  },
+  mounted() {
+        if (localStorage.getItem('keranjangUser')) {
+          try {
+              this.keranjangUser = JSON.parse(localStorage.getItem('keranjangUser'));
+          } catch (error) {
+              localStorage.removeItem('keranjanguser');
+          }
+      }
+  }
 }
 </script>
