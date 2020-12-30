@@ -45,13 +45,11 @@
                                     <h3>{{productDetails.name}}</h3>
                                 </div>
                                 <div class="pd-desc text-justify">
-                                    <p>
-                                        {{ productDetails.description }}
-                                    </p>
+                                    <p v-html=" productDetails.description"></p>
                                     <h4>{{ productDetails.price }}</h4>
                                 </div>
                                 <div class="quantity">
-                                    <router-link to="/cart" class="primary-btn pd-cart">Add To Cart</router-link>
+                                    <a @click="saveKeranjang(productDetails.id)" href="#" class="primary-btn pd-cart">Add To Cart</a>
                                 </div>
                             </div>
                         </div>
@@ -88,29 +86,38 @@ export default {
   data (){
       return {
       gambar : "",
-      thumbs : [
-          "img/mickey1.jpg",
-          "img/mickey2.jpg",
-          "img/mickey3.jpg",
-          "img/mickey4.jpg"
-      ],
-      productDetails : []
-      }
-
+      productDetails : [],
+      keranjangUser: []
+      };
   },
   methods: {
-      changeImage (urlImage){
+      changeImage (urlImage)
+      {
           this.gambar = urlImage;
         //   console.log(this.idPoduct);
       },
-      setDataPicture(data){
+      setDataPicture(data)
+      {
           //replace object productDetail dengan data dari API 
           this.productDetails = data;
           // replace value gambar default dengan data dari API (Galleries)
           this.gambar = data.galleries[0].photo;
+      },
+      saveKeranjang(idProduct)
+      {
+          this.keranjangUser.push(idProduct);
+          const parsed = JSON.stringify(this.keranjangUser);
+          localStorage.setItem('keranjangUser', parsed);
       }
   },
   mounted() {
+      if (localStorage.getItem('keranjangUser')) {
+          try {
+              this.keranjangUser = JSON.parse(localStorage.getItem('keranjangUser'));
+          } catch (error) {
+              localStorage.removeItem('keranjanguser');
+          }
+      }
       axios
       .get("http://shayna-backend.belajarkoding.com/api/products", {
           params : {
