@@ -61,19 +61,46 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="namaLengkap">Nama lengkap</label>
-                                        <input type="text" class="form-control" id="namaLengkap" aria-describedby="namaHelp" placeholder="Masukan Nama">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="namaLengkap" 
+                                            aria-describedby="namaHelp" 
+                                            placeholder="Masukan Nama"
+                                            v-model="customerInfo.name"
+                                        />
                                     </div>
                                     <div class="form-group">
                                         <label for="namaLengkap">Email Address</label>
-                                        <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Masukan Email">
+                                        <input 
+                                            type="email" 
+                                            class="form-control" 
+                                            id="emailAddress" 
+                                            aria-describedby="emailHelp" 
+                                            placeholder="Masukan Email"
+                                            v-model="customerInfo.email"
+                                        />
                                     </div>
                                     <div class="form-group">
                                         <label for="namaLengkap">No. HP</label>
-                                        <input type="text" class="form-control" id="noHP" aria-describedby="noHPHelp" placeholder="Masukan No. HP">
+                                        <input 
+                                            type="text" 
+                                            class="form-control" 
+                                            id="noHP" 
+                                            aria-describedby="noHPHelp" 
+                                            placeholder="Masukan No. HP"
+                                            v-model="customerInfo.number"
+                                        />
                                     </div>
                                     <div class="form-group">
                                         <label for="alamatLengkap">Alamat Lengkap</label>
-                                        <textarea class="form-control" id="alamatLengkap" rows="3"></textarea>
+                                        <textarea 
+                                            class="form-control" 
+                                            id="alamatLengkap" 
+                                            rows="3"
+                                            v-model="customerInfo.address"
+                                            >
+                                        </textarea>
                                     </div>
                                 </form>
                             </div>
@@ -93,7 +120,7 @@
                                     <li class="subtotal mt-3">No. Rekening <span>2208 1996 1403</span></li>
                                     <li class="subtotal mt-3">Nama Penerima <span>Shayna</span></li>
                                 </ul>
-                                <router-link to="/success" class="proceed-btn">I ALREADY PAID</router-link>
+                                <a @click="checkout()" class="proceed-btn">I ALREADY PAID</a>
                             </div>
                         </div>
                     </div>
@@ -107,6 +134,7 @@
 
 <script>
 import HeaderShayna from "../components/HeaderShayna";
+import axios from 'axios';
 export default {
     name : "Cart",
     components : {
@@ -114,8 +142,13 @@ export default {
     },
     data (){
         return{
-            products : [],
-             keranjangUser: []
+             keranjangUser: [],
+             customerInfo: {
+                 name: '',
+                 email: '',
+                 number: '',
+                 address: ''
+             }
         };
     },
         methods: {
@@ -124,18 +157,34 @@ export default {
                 const parsed = JSON.stringify(this.keranjangUser);
                 localStorage.setItem('keranjangUser', parsed);
             },
-            saveKeranjang(idProduct, nameProduct, priceProduct, photoProduct)
+
+            //fungsi mengirim data ke API
+            checkout()
             {
-            var productStored = {
-                "id" : idProduct,
-                "name" : nameProduct,
-                "price" : priceProduct,
-                "galleries" : photoProduct
+                let productIds = this.keranjangUser.map(function(product)
+                {
+                    return product.id
+                });
+
+                let checkoutData = {
+                    'name' : this.customerInfo.name,
+                    'email' : this.customerInfo.email,
+                    'number' : this.customerInfo.number,
+                    'address' : this.customerInfo.address,
+                    "transaction_total" : this.totalBiaya,
+                    'transaction_status' : "PENDING",
+                    "transaction_details" : productIds
+                };
+
+                axios
+                    .post(
+                        "http://shayna-backend.belajarkoding.com/api/checkout",
+                        checkoutData
+                    )
+                    .then(() => this.$router.push("success"))
+                    .catch (err => console.log(err));
             }
-            this.keranjangUser.push(productStored);
-            const parsed = JSON.stringify(this.keranjangUser);
-            localStorage.setItem('keranjangUser', parsed);
-            }
+
         },
         mounted() {
             if (localStorage.getItem('keranjangUser')) 
