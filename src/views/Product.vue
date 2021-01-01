@@ -26,7 +26,7 @@
                             <div class="product-pic-zoom">
                                 <img class="product-big-img" :src="gambar" alt="" />
                             </div>
-                            <div class="product-thumbs" v-if="productDetails.galleries > 0">
+                            <div class="product-thumbs" v-if="productDetails.galleries.length > 0">
                                 <carousel class="product-thumbs-track ps-slider" :dots="false" :nav="false">
                                     <div
                                         v-for="ss in productDetails.galleries"
