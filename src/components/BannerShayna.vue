@@ -73,20 +73,22 @@ export default {
             }
             this.keranjangUser.push(productStored);
             const parsed = JSON.stringify(this.keranjangUser);
-            localStorage.setItem('keranjangUser', parsed);
+            localStorage.setItem('keranjangUser', parsed); 
+            window.location.reload();
             }
         },
         mounted() {
-          if (localStorage.getItem('keranjangUser')) {
+            axios
+            .get("http://shayna-backend.belajarkoding.com/api/products")
+            .then(res => ( this.products = res.data.data.data))
+            .catch(err => console.log(err));
+
+         if (localStorage.getItem('keranjangUser')) {
           try {
               this.keranjangUser = JSON.parse(localStorage.getItem('keranjangUser'));
           } catch (error) {
               localStorage.removeItem('keranjanguser');
           }
-            axios
-            .get("http://shayna-backend.belajarkoding.com/api/products")
-            .then(res => ( this.products = res.data.data.data))
-            .catch(err => console.log(err));
         }
   }
     
